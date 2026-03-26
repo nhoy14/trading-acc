@@ -552,3 +552,112 @@ body {
   .dash-search { width: 100%; }
   .acard-grid { grid-template-columns: 1fr; }
 }
+
+/* ─── Portfolio Cabinet (The "Cart") ──────── */
+.portfolio-cabinet {
+  position: fixed;
+  bottom: 0px;
+  left: 280px; /* Sidebar width */
+  right: 0;
+  padding: 0 40px 32px 40px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.cabinet-glow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 80%;
+  height: 100px;
+  background: var(--accent);
+  filter: blur(100px);
+  opacity: 0.2;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.cabinet-content {
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(32px);
+  border: 1px solid var(--border-alt);
+  border-radius: 20px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
+  pointer-events: auto;
+  animation: cabinet-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cabinet-slide-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cabinet-info { display: flex; align-items: center; gap: 16px; }
+.cabinet-badge {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--accent); color: #000;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+.cabinet-title { font-size: 14px; font-weight: 700; color: #fff; }
+.cabinet-sub { font-size: 11px; color: var(--txt-dim); }
+
+.cabinet-items {
+  flex: 1; display: flex; align-items: center;
+  overflow: hidden; padding-left: 10px;
+}
+.cabinet-item {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg-alt); border: 2px solid var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff;
+  transition: all 0.2s; margin-left: -12px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+}
+.cabinet-item:first-child { margin-left: 0; }
+.cabinet-item:hover { transform: translateY(-8px) scale(1.2); z-index: 10; border-color: var(--accent); }
+
+.cabinet-actions { display: flex; gap: 12px; }
+.cab-btn {
+  padding: 10px 18px; border-radius: 12px; border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03); color: #fff;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; white-space: nowrap;
+}
+.cab-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); }
+.cab-btn.clear { color: var(--txt-dim); border: none; }
+.cab-btn.delete { background: #f87171; color: #fff; border: none; }
+.cab-btn.delete:hover { background: #ef4444; box-shadow: 0 0 20px rgba(248,113,113,0.4); }
+
+/* Sidebar expanded adjust */
+@media (max-width: 1024px) {
+  .portfolio-cabinet { left: 80px; }
+}
+@media (max-width: 768px) {
+  .portfolio-cabinet { left: 0; right: 0; padding: 0 20px 20px 20px; }
+  .cabinet-content { flex-direction: column; gap: 16px; padding: 20px; text-align: center; }
+  .cabinet-items { display: none; }
+}
+
+/* ─── Card Enhancement ─── */
+.acard-qcopy {
+  overflow: hidden;
+  position: relative;
+}
+.acard-qcopy::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: translateX(-100%);
+}
+.acard-qcopy:hover::after {
+  animation: shine-qcopy 0.8s forwards;
+}
+@keyframes shine-qcopy {
+  to { transform: translateX(100%); }
+}

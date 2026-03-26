@@ -336,26 +336,37 @@ export default function Admin({ accounts, refreshAccounts, toast, onGoUser }) {
         </div>
       </main>
 
-      {/* Delete Confirmation Modal */}
-      {delTarget && (
-        <div className="modal-overlay" onClick={() => setDelTarget(null)}>
-          <div className="add-modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 400 }}>
-            <div className="add-modal-head">
-              <div className="add-modal-title">🗑️ Delete Account?</div>
-              <div className="add-modal-sub">
-                {delTarget === 'bulk'
-                  ? `Are you sure you want to delete ${selected.size} accounts?`
-                  : `Are you sure you want to delete "${delTarget.name}"?`}
-                This action cannot be undone.
+      {/* ── Portfolio Cabinet (The "Cart") ── */}
+      {selected.size > 0 && (
+        <div className="portfolio-cabinet">
+          <div className="cabinet-glow" />
+          <div className="cabinet-content">
+            <div className="cabinet-info">
+              <div className="cabinet-badge">{selected.size}</div>
+              <div className="cabinet-text">
+                <div className="cabinet-title">Portfolio Cabinet</div>
+                <div className="cabinet-sub">Bulk management active</div>
               </div>
             </div>
-            <div className="add-modal-body" style={{ paddingTop: 0 }}>
-              <div className="add-modal-foot">
-                <button className="mbtn cancel" onClick={() => setDelTarget(null)}>Cancel</button>
-                <button className="btn-add" style={{ background: '#f87171', color: '#fff' }} onClick={() => doDelete(delTarget)}>
-                  Confirm Delete
-                </button>
-              </div>
+            
+            <div className="cabinet-items">
+              {Array.from(selected).map(id => {
+                const acc = accounts.find(a => a.id === id)
+                return acc ? (
+                  <div key={id} className="cabinet-item" title={acc.name}>
+                    {initials(acc.name)}
+                  </div>
+                ) : null
+              })}
+            </div>
+
+            <div className="cabinet-actions">
+              <button className="cab-btn clear" onClick={() => setSelected(new Set())}>
+                Clear
+              </button>
+              <button className="cab-btn delete" onClick={() => setDelTarget('bulk')}>
+                <i className="fas fa-trash"></i> Delete Selected
+              </button>
             </div>
           </div>
         </div>
