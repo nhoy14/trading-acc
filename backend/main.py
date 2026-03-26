@@ -13,7 +13,7 @@ app = FastAPI(title="TradeVault API")
 # Enable CORS for React frontend (Vite default is 5173)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, restrict to localhost:5173
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -21,7 +21,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "TradeVault API is Live and Secure", "status": "healthy"}
+    return {"message": "TradeVault API is Live and Secure", "status": "healthy", "service": "backend"}
 
 @app.post("/login", response_model=Token)
 async def login(user: UserLogin):
