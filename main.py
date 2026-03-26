@@ -35,27 +35,43 @@ async def login(user: UserLogin):
 
 @app.get("/accounts")
 async def get_accounts():
-    accounts = await retrieve_accounts()
-    return accounts
+    try:
+        accounts = await retrieve_accounts()
+        return accounts
+    except Exception as e:
+        print(f"ERROR fetching accounts: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/accounts", status_code=201)
 async def create_account(account: AccountCreate = Body(...)):
-    new_account = await add_account(account.dict())
-    return new_account
+    try:
+        new_account = await add_account(account.dict())
+        return new_account
+    except Exception as e:
+        print(f"ERROR creating account: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.put("/accounts/{id}")
 async def update_account_data(id: str, account: AccountUpdate = Body(...)):
-    updated = await update_account(id, account.dict())
-    if updated:
-        return {"message": "Account updated successfully"}
-    raise HTTPException(status_code=404, detail=f"Account {id} not found")
+    try:
+        updated = await update_account(id, account.dict())
+        if updated:
+            return {"message": "Account updated successfully"}
+        raise HTTPException(status_code=404, detail=f"Account {id} not found")
+    except Exception as e:
+        print(f"ERROR updating account {id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.delete("/accounts/{id}")
 async def delete_account_data(id: str):
-    deleted = await delete_account(id)
-    if deleted:
-        return {"message": "Account deleted successfully"}
-    raise HTTPException(status_code=404, detail=f"Account {id} not found")
+    try:
+        deleted = await delete_account(id)
+        if deleted:
+            return {"message": "Account deleted successfully"}
+        raise HTTPException(status_code=404, detail=f"Account {id} not found")
+    except Exception as e:
+        print(f"ERROR deleting account {id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
