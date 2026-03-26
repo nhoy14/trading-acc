@@ -1,12 +1,12 @@
 from fastapi import FastAPI, Body, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from .database import (
+from backend.database import (
     retrieve_accounts,
     add_account,
     update_account,
     delete_account
 )
-from .models import AccountCreate, AccountUpdate, UserLogin, Token
+from backend.models import AccountCreate, AccountUpdate, UserLogin, Token
 
 app = FastAPI(title="TradeVault API")
 
