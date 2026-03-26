@@ -19,6 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"message": "TradeVault API is Live and Secure", "status": "healthy"}
+
 @app.post("/login", response_model=Token)
 async def login(user: UserLogin):
     # Mock authentication (admin/1234 as per original logic)
