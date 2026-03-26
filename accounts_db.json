@@ -1,0 +1,9 @@
+[
+    {
+        "name": "Test Cloud",
+        "server": "Vultr-01",
+        "accountId": "CLD-001",
+        "password": "test",
+        "id": "e973ea2b-5add-46f3-9b94-1784350c7ae9"
+    }
+]
